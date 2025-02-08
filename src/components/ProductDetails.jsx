@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
+import { ShopContext } from "../ShopContext";
 
 const ProductDetails = () => {
+
+  const {AddItemToCart} = useContext(ShopContext);
+  console.log(AddItemToCart);
+  
  
   const {id} = useParams();
   const navigate = useNavigate();
@@ -71,7 +76,9 @@ const ProductDetails = () => {
             </span>
             <span className='text-gray-400 text-base'> {product.rating.toFixed(1)} </span>
           </div>
-          <button to="/products" className='bg-pink-600 mt-4 text-white px-4 py-2 rounded-lg shadow hover:bg-pink-700 transition-colors duration-200 cursor-pointer '>
+          <button 
+          onClick={() => AddItemToCart(product)}
+          className='bg-pink-600 mt-4 text-white px-4 py-2 rounded-lg shadow hover:bg-pink-700 transition-colors duration-200 cursor-pointer '>
         Add To Cart</button>
         </div>
         
