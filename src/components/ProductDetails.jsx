@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
-import { ShopContext } from "../ShopContext";
+import useShop from "../ShopContext";
 
 const ProductDetails = () => {
 
-  const {AddItemToCart} = useContext(ShopContext);
-  console.log(AddItemToCart);
+  const {AddItemToCart} = useShop();
   
  
   const {id} = useParams();
@@ -20,8 +19,8 @@ const ProductDetails = () => {
       try {
        const response = await fetch(`https://dummyjson.com/products/${id}`);
        const result = await response.json();
-       setProduct(result);
-       setMainImage(result);
+       setProduct(result);       
+       setMainImage(result.thumbnail);
         
       } catch (error) {
         console.error(error)
@@ -34,7 +33,7 @@ const ProductDetails = () => {
     <div className="p-4 mt-4">
       <button
         onClick={() => navigate(-1)}
-        className="bg-pink-600 text-white px-4 py-2 rounded-lg shadow hover:bg-pink-700 transition-colors duration-200 cursor-pointer "
+        className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition-colors duration-200 cursor-pointer "
       >
         Go Back
       </button>
@@ -54,7 +53,7 @@ const ProductDetails = () => {
               onClick={() => setMainImage(image)}
                 key={index}
                 className="h-24 w-24 cursor-pointer rounded-lg space-x-4 shadow object-cover "
-                src={mainImage}
+                src={image}
                 alt={product.title}
               />
           
@@ -64,7 +63,7 @@ const ProductDetails = () => {
         <div className="md:w-1/2 w-full ml-4">
           <p className="text-gray-600">{product.description}</p>
           <div className='flex justify-between items-center mt-4'>
-          <span className='text-pink-600 font-semibold text-2xl'>${product.price}</span>
+          <span className='text-blue-600 font-semibold text-2xl'>${product.price}</span>
           <span className='text-sm text-gray-700 '>{product.stock > 0 ?`${product.stock } in stock`: "out stock"} </span>
       </div>
           <div className="mt-4">
@@ -78,7 +77,7 @@ const ProductDetails = () => {
           </div>
           <button 
           onClick={() => AddItemToCart(product)}
-          className='bg-pink-600 mt-4 text-white px-4 py-2 rounded-lg shadow hover:bg-pink-700 transition-colors duration-200 cursor-pointer '>
+          className='bg-blue-600 mt-4 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition-colors duration-200 cursor-pointer '>
         Add To Cart</button>
         </div>
         

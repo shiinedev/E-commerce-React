@@ -1,15 +1,26 @@
-import { Children, createContext } from "react";
+import {  createContext, useContext, useEffect } from "react";
 
 import { reducer,initialState } from "./ShopReducer";
 import { useReducer } from "react";
 
 export const ShopContext = createContext(initialState);
 
-export const ShopProvider = () =>{
+ export const ShopProvider = ({children}) =>{
 
     const [state,dispatch] = useReducer(reducer,initialState);
+
+    useEffect(() => {
+        localStorage.setItem("cartItems",JSON.stringify({
+            products:state.products,
+            total:state.total
+        }))
+    },[state]);
+
     const calculateTotalPrice = (products) =>{
-        const total = products.reducer((product,total) => product.price * quantity + total );
+        let total = 0;
+       products.forEach(product => 
+             total += product.price * product.quantity 
+        );
 
         dispatch({
             type:"CalculateTotal",
@@ -48,19 +59,18 @@ export const ShopProvider = () =>{
 
     const updateQuantity = (product,newQuantity) =>{
 
-        const productIndex = state.product.findIndex(p => p.id === product.id);
+        const productIndex = state.products.findIndex(p => p.id === product.id);
+        
 
         let updatedProducts = [...state.products];
 
         if(newQuantity <= 0){
             updatedProducts = updatedProducts.filter(p => p.id !== product.id);
         }else{
-            updatedProducts[productIndex] = [
-                ...updatedProducts,
-                {
+            updatedProducts[productIndex] = {
                     ...updatedProducts[productIndex],quantity:newQuantity
                 }
-            ]
+            
         }
 
         //calling calculate Total
@@ -84,9 +94,10 @@ export const ShopProvider = () =>{
         })
     }
 
-    const clearCart  = ()=>{
+    const clearCart  = () => {
         dispatch({
-            type:"ClearCart"
+            type:"ClearCart",
+            
         })
     }
 
@@ -101,8 +112,21 @@ export const ShopProvider = () =>{
 
     return(
         <ShopContext.Provider value={value}>
-            {Children}
+            {children}
         </ShopContext.Provider>
     )
    
 }
+
+
+
+ const useShop = ()=>{
+    const context = useContext(ShopContext);
+    if(context === undefined){
+        throw new Error("Context must be in shopContext !");
+    }
+
+    return context;
+}
+
+export default useShop;

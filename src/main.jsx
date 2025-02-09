@@ -9,12 +9,18 @@ import Products from './pages/Products.jsx'
 import Product from './pages/Product.jsx'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {ShopProvider} from './ShopContext.jsx'
 
 const routerProvider = createBrowserRouter([
   {
+    
     path:"/",
     element:<App />,
     children:[
+      {
+        index:true,
+        element:<Products />
+      },
       {
         path:"/about",
       element:<About />,
@@ -41,6 +47,10 @@ const routerProvider = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <ShopProvider>
+
     <RouterProvider  router={routerProvider}/>
-  </StrictMode>,
+
+    </ShopProvider>
+    </StrictMode>
 )
