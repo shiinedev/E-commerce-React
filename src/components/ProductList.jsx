@@ -76,7 +76,7 @@ const ProductList = () => {
   if(isLoading) return <ProductLoadingSkelton />
 
   return (
-    <>
+    <div className='px-2'>
  
     <input
     ref={searchRef}
@@ -87,7 +87,7 @@ const ProductList = () => {
      onChange={(e) => setQuery(e.target.value)}
       />
 
-    <div className='max-w-4xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 px-2 '>
+    <div className='max-w-4xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2  '>
         {
             products ?(
                 
@@ -100,7 +100,7 @@ const ProductList = () => {
             <p className='text-xl font-bold'>No products available.</p>
         }
     </div>
-    </>
+    </div>
   )
 }
 
