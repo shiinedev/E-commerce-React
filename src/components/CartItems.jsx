@@ -17,9 +17,9 @@ const CartItems = () => {
         </h2>
             {
                 products.map(product =>(
-                    <div key={product.id} className=' flex items-start space-x-2 space-y-4'>
+                    <div key={product.id} className=' flex items-start space-x-2  mb-6'>
                         <img
-                        className='h-34 w-34 rounded-lg  shadow object-cover'
+                        className='h-24 w-24 rounded-lg   object-cover'
                          src={product.thumbnail} 
                          alt={product.title}
                          />
