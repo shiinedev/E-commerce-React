@@ -27,15 +27,10 @@ A modern e-commerce web application built with React and Vite, providing a seaml
 
 2. Navigate to the project directory
     ```bash 
-     cd E-commerce-React
-
-
-
-
+    cd E-commerce-React
 3. Install dependencies:
     ```bash 
-        npm install
-
+    npm install
 ---
 
 ### 🚀 Usage
